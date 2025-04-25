@@ -1,5 +1,11 @@
 import React from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+} from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
 
 const receitas = [
@@ -24,6 +30,8 @@ const receitas = [
       "4. Cozinhe até ficar macio",
       "5. Sirva com arroz, couve e laranja",
     ],
+    imagem:
+      "https://alegrafoods.com.br/wp-content/uploads/2023/06/composicao-kit-feijoada-525x350.jpg", // Nova imagem de Feijoada
   },
   {
     id: 2,
@@ -47,6 +55,8 @@ const receitas = [
       "4. Adicione o creme de leite",
       "5. Sirva com arroz e batata palha",
     ],
+    imagem:
+      "https://www.unileverfoodsolutions.com.br/dam/global-ufs/mcos/SLA/calcmenu/recipes/BR-recipes/chicken-&-other-poultry-dishes/strogonoff-de-frango/main-header.jpg", // Imagem do Strogonoff mantida
   },
 ];
 
@@ -56,12 +66,21 @@ export default function HomeScreen({ navigation }) {
       onPress={() => navigation.navigate("Receita", { receita: item })}
     >
       <Card style={styles.card} elevation={5}>
-        <Card.Content>
-          <Title style={styles.cardTitle}>{item.nome}</Title>
-          <Paragraph style={styles.cardText}>
-            Tempo de Preparo: {item.tempopreparo}
-          </Paragraph>
-          <Paragraph style={styles.cardText}>Porções: {item.porcoes}</Paragraph>
+        <Card.Content style={styles.cardContent}>
+          <Image
+            source={{ uri: item.imagem }}
+            style={styles.cardImage}
+            resizeMode="cover"
+          />
+          <View style={styles.textContainer}>
+            <Title style={styles.cardTitle}>{item.nome}</Title>
+            <Paragraph style={styles.cardText}>
+              Tempo de Preparo: {item.tempopreparo}
+            </Paragraph>
+            <Paragraph style={styles.cardText}>
+              Porções: {item.porcoes}
+            </Paragraph>
+          </View>
         </Card.Content>
       </Card>
     </TouchableOpacity>
@@ -79,30 +98,45 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20, // Mais espaçamento
-    backgroundColor: "#F1F3F6", // Fundo cinza claro
+    padding: 20,
+    backgroundColor: "#F1F3F6",
   },
   card: {
     marginBottom: 20,
-    borderRadius: 12, // Bordas mais arredondadas
+    borderRadius: 12,
     backgroundColor: "#FFFFFF",
-    padding: 12, // Padding interno maior
-    borderWidth: 1, // Borda sutil
-    borderColor: "#6B4EFF", // Borda roxa
-    elevation: 5, // Sombra mais pronunciada
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#6B4EFF",
+    elevation: 5,
+  },
+  cardContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: "#FF0000",
+  },
+  textContainer: {
+    flex: 1,
   },
   cardTitle: {
-    fontSize: 22, // Fonte maior
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#1A1A1A", // Cor mais escura
+    color: "#1A1A1A",
     marginBottom: 10,
-    textShadowColor: "rgba(0, 0, 0, 0.1)", // Sombra no texto
+    textShadowColor: "rgba(0, 0, 0, 0.1)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   cardText: {
     fontSize: 16,
-    color: "#4A4A4A", // Cinza mais escuro
-    marginVertical: 6, // Mais espaçamento
+    color: "#4A4A4A",
+    marginVertical: 6,
   },
 });
